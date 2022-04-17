@@ -22,23 +22,42 @@ export const FeedbackProvider = ({ children }) => {
 		},
 	]);
 
+    // state for feedbackEdit and setFeedbackEdit
+    const [feedbackEdit, setFeedbackEdit] = useState({
+        item: {},
+        edit: false,
+    })
+
+    // Add feedback
+    const addFeedback = (newFeedback) => {
+		newFeedback.id = uuidv4();
+		setFeedback([newFeedback, ...feedback]);
+		console.log(newFeedback);
+	};
+
+    // Delete feedback
 	const deleteFeedback = (id) => {
 		if (window.confirm("Are you sure you want to delete this item?")) {
 			setFeedback(feedback.filter((item) => item.id !== id));
 		}
     };
 
-    const addFeedback = (newFeedback) => {
-		newFeedback.id = uuidv4();
-		setFeedback([newFeedback, ...feedback]);
-		console.log(newFeedback);
-	};
+    // Set item to be updated
+    const editFeedback = (item) => {
+        setFeedbackEdit({
+            item,
+            edit: true
+        })
+    }
+
+ 
 		return (
 			<FeedbackContext.Provider
 				value={{
 					feedback,
 					deleteFeedback,
                     addFeedback,
+                    editFeedback,
 				}}
 			>
 				{children}
