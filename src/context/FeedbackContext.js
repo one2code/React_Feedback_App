@@ -42,6 +42,11 @@ export const FeedbackProvider = ({ children }) => {
 		}
     };
 
+    // Update feedback item
+
+    const updateFeedback = (id, updateItem) => {
+       setFeedback(feedback.map((item) =>item.id === id ? {...item, ...updateItem} : item ))
+    }
     // Set item to be updated
     const editFeedback = (item) => {
         setFeedbackEdit({
@@ -50,15 +55,17 @@ export const FeedbackProvider = ({ children }) => {
         })
     }
 
- 
+        // Gives listed components access to the form
 		return (
 			<FeedbackContext.Provider
 				value={{
 					feedback,
-					deleteFeedback,
                     addFeedback,
+					deleteFeedback,
+                    updateFeedback,
                     editFeedback, //This is the function that edits feedback
-                    feedbackEdit //This is the state
+                    feedbackEdit,  //This is the state
+                   
 				}}
 			>
 				{children}

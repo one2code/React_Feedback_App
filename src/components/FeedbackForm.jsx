@@ -2,7 +2,7 @@ import Card from "./shared/card";
 import Button from "./shared/Button";
 import RatingSelect from "./RatingSelect";
 import { useState, useContext, useEffect } from "react";
-import FeedbackContext from '../context/FeedbackContext'
+import FeedbackContext from "../context/FeedbackContext";
 
 function FeedbackForm() {
 	const [text, setText] = useState("");
@@ -10,15 +10,17 @@ function FeedbackForm() {
 	const [message, setMessage] = useState("");
 	const [rating, setRating] = useState("10");
 
-	const {addFeedback, feedbackEdit} = useContext(FeedbackContext)
+	// Allows listed functions to gain access to useContext
+	const { addFeedback, feedbackEdit, updateFeedback } =
+		useContext(FeedbackContext);
 
 	useEffect(() => {
-		if(feedbackEdit.edit === true) {
-			setBtnDisabled(false)
-			setText(feedbackEdit.item.text)
-			setRating(feedbackEdit.item.rating)
+		if (feedbackEdit.edit === true) {
+			setBtnDisabled(false);
+			setText(feedbackEdit.item.text);
+			setRating(feedbackEdit.item.rating);
 		}
-	}, [feedbackEdit])
+	}, [feedbackEdit]);
 
 	const handleTextChange = (e) => {
 		if (text === "") {
@@ -35,16 +37,28 @@ function FeedbackForm() {
 	};
 
 	const handleSubmit = (e) => {
-		e.preventDefault();
+		e.preventDefault()
 		if (text.trim().length > 10) {
-			const newFeedback = {
-				text,
-				rating,
-			};
-			addFeedback(newFeedback);
-			setText("");
+		  const newFeedback = {
+			text,
+			rating,
+		  }
+	
+		  if (feedbackEdit.edit === true) {
+			updateFeedback(feedbackEdit.item.id, newFeedback)
+		  } else {
+			addFeedback(newFeedback)
+		  }
+	
+		  // NOTE: reset to default state after submission
+		  setBtnDisabled(true) // 👈  add this line to reset disabled
+		  setRating(10) //👈 add this line to set rating back to 10
+		  setText('')
 		}
-	};
+	  }
+
+	
+
 	return (
 		<Card>
 			<form onSubmit={handleSubmit}>
