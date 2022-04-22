@@ -7,17 +7,17 @@ export const FeedbackProvider = ({ children }) => {
 	const [feedback, setFeedback] = useState([
 		{
 			id: 1,
-			text: "This is feedback item 1",
+			text: "To add a review, select a rating and then enter your review information in the text area and click send",
 			rating: 10,
 		},
 		{
 			id: 2,
-			text: "This is feedback item 2",
+			text: "To modify a entry, please click the pencil icon to begin editing",
 			rating: 9,
 		},
 		{
 			id: 3,
-			text: "This is feedback item 3",
+			text: "To delete an item, please click the x icon",
 			rating: 7,
 		},
 	]);
